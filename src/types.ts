@@ -39,7 +39,7 @@ export interface DatabaseClient {
     getByIsbn(id: string): Promise<RepositoryBook | Error>;
     getAll(): Promise<RepositoryBook[] | Error>;
     getAvailableBooks(): Promise<RepositoryBook[] | Error>;
-    filter(searchObject: object): RepositoryBook[] | Error;
+    filter(searchObject: object): Promise<RepositoryBook[] | Error>;
     delete(id: string): Promise<DeleteResponse | Error>;
-    create(books: BookData[]): RepositoryBook[] | Error;
+    create(books: BookData[]): Promise<RepositoryBook[] | Error>;
 }

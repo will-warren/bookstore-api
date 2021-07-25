@@ -92,24 +92,25 @@ export class BookRepository {
         return new Promise<GetResponse>((resolve, reject) => resolve(response));
     }
 
-    public addBook(bookData:BookData):Promise<CreateResponse> {
-        const bookInInventory = this.books.find(book => book.isbn === bookData.isbn);
-        if(bookInInventory === undefined) {
-            const newBook:RepositoryBook = {
-                id: this.books.length,
-                title: bookData.title,
-                author: bookData.author,
-                isbn: bookData.isbn,
-                category: bookData.category,
-                inventory: 1,
-                notes: bookData.notes
-            }
+    public addBooks(bookList:BookData[]):Promise<CreateResponse> {
+        bookList.forEach(bookData => {
+            const bookInInventory = this.books.find(book => book.isbn === bookData.isbn);
+            if(bookInInventory === undefined) {
+                const newBook:RepositoryBook = {
+                    id: this.books.length,
+                    title: bookData.title,
+                    author: bookData.author,
+                    isbn: bookData.isbn,
+                    category: bookData.category,
+                    inventory: 1,
+                    notes: bookData.notes
+                }
 
-            this.books.push(newBook);
-        } else {
-            bookInInventory.inventory = bookInInventory.inventory + 1;
-        }
-        
+                this.books.push(newBook);
+            } else {
+                bookInInventory.inventory = bookInInventory.inventory + 1;
+            }
+        });
         const response:CreateResponse = { result: true };
         return new Promise<CreateResponse>((resolve, reject) => resolve(response));
     }

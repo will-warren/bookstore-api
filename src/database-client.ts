@@ -49,11 +49,12 @@ export class DbClient implements DatabaseClient {
         return response.books;
     }
 
-    public filter(query:Query): RepositoryBook[] | Error {
-        const bookResults: RepositoryBook[] = []
+    public filter(query:Query): Promise<RepositoryBook[] | Error> {
+        let bookResults: RepositoryBook[] = []
         if(query.titles !== undefined) {
             let foundBooks:RepositoryBook[] = []
             query.titles?.forEach(async title  => {
+                console.log(title)
                 let response:GetResponse;
                 try {
                     response = await this.dbClient.queryBooksByTitle(title);
@@ -63,7 +64,7 @@ export class DbClient implements DatabaseClient {
                 foundBooks.concat(response.books);
             });
 
-            this.addBookIfNotInList(bookResults, foundBooks);
+            bookResults = this.addBookIfNotInList(bookResults, foundBooks);
         }
 
         if(query.authors !== undefined) {
@@ -79,7 +80,7 @@ export class DbClient implements DatabaseClient {
                 foundBooks.concat(response.books);
             });
 
-            this.addBookIfNotInList(bookResults, foundBooks);
+            bookResults = this.addBookIfNotInList(bookResults, foundBooks);
         }
 
         if(query.categories !== undefined) {
@@ -95,10 +96,11 @@ export class DbClient implements DatabaseClient {
                 foundBooks.concat(response.books);
             });
 
-            this.addBookIfNotInList(bookResults, foundBooks);
+            bookResults = this.addBookIfNotInList(bookResults, foundBooks);
         }
 
-        return bookResults;
+        console.log('all books', bookResults)
+        return new Promise<RepositoryBook[]>((resolve, reject) => resolve(bookResults));
     }
 
     public async delete(isbn: string): Promise<DeleteResponse | Error> {
@@ -115,11 +117,7 @@ export class DbClient implements DatabaseClient {
     public  async create(books: BookData[]): Promise<RepositoryBook[] | Error> {
         let response:CreateResponse;
         try {
-            response = await books.map(async book => {
-                response = await this.dbClient.addBook(book);
-                return response;
-            });
-            
+            response = await this.dbClient.addBooks(books);            
         } catch (error) {
             throw(error)
         }
@@ -128,6 +126,8 @@ export class DbClient implements DatabaseClient {
             const books = (await this.dbClient.getBooks()).books
             return books;
         }
+
+        return new Promise<RepositoryBook[]>((resolve, reject) => reject(Error));
 
         
     }
@@ -138,6 +138,8 @@ export class DbClient implements DatabaseClient {
                 bookResults.push(book);
             }
         });
+
+        return bookResults;
     }
     
 }
