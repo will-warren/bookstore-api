@@ -97,7 +97,7 @@ export class BookRepository {
             const bookInInventory = this.books.find(book => book.isbn === bookData.isbn);
             if(bookInInventory === undefined) {
                 const newBook:RepositoryBook = {
-                    id: this.books.length,
+                    id: this.books.length + 1,
                     title: bookData.title,
                     author: bookData.author,
                     isbn: bookData.isbn,
@@ -124,7 +124,6 @@ export class BookRepository {
             bookToRemove.inventory = bookToRemove.inventory - 1;
             response = {result: true, message: "book removed"};
         } 
-
         return new Promise<DeleteResponse>((resolve, reject) => resolve(response));
     }
 

@@ -102,7 +102,7 @@ app.post('/books', async (req: Request, res: Response) => {
 
 app.delete('/books/:id', async (req: Request, res: Response) => {
     const isDeleted :DeleteResponse | Error = (await dbClient.delete(req.params.id));
-    console.log(isDeleted);
+
     if(isDeleted instanceof Error) {
         return res.status(500).send('Internal Server Error');
     }
