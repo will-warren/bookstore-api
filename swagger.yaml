@@ -1,0 +1,143 @@
+openapi: 3.0.1
+info:
+  title: Bookstore-API
+  description: Demo Bookstore API
+  version: '0.1'
+servers:
+  - url: 'http://localhost:8888'
+paths:
+  /books/:isbn:
+    get:
+      description: Get a book by its isbn
+      parameters:
+        - name: Access-Control-Allow-Credentials
+          in: header
+          schema:
+            type: string
+          example: '*'
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '500':
+          description: Internal Server Error
+      servers:
+        - url: 'http://localhost:8888'
+    delete:
+      description: Auto generated using Swagger Inspector
+      parameters:
+        - name: Access-Control-Allow-Credentials
+          in: header
+          schema:
+            type: string
+          example: '*'
+      responses:
+        '204':
+          description: Auto generated using Swagger Inspector
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '500':
+          description: Internal Server Error
+      servers:
+        - url: 'http://localhost:8888'
+    servers:
+      - url: 'http://localhost:8888'
+  /books/:
+    get:
+      description: Gets all books
+      parameters:
+        - name: Access-Control-Allow-Credentials
+          in: header
+          schema:
+            type: string
+          example: '*'
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '500':
+          description: Internal Server Error
+      servers:
+        - url: 'http://localhost:8888'
+    post:
+      description: Creates books from Array of books
+      parameters:
+        - name: Access-Control-Allow-Credentials
+          in: header
+          schema:
+            type: string
+          example: '*'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+            examples:
+              '0':
+                value: |-
+                  [
+                      {
+                      "title": "string",
+                      "author": "string",
+                      "isbn": "string",
+                      "category": "string",
+                      "notes": "string"
+                      }
+                  ]
+      responses:
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal Server Error
+      servers:
+        - url: 'http://localhost:8888'
+    servers:
+      - url: 'http://localhost:8888'
+  /available-books/:
+    get:
+      description: Gets all available books
+      parameters:
+        - name: Access-Control-Allow-Credentials
+          in: header
+          schema:
+            type: string
+          example: '*'
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '500':
+          description: Internal Server Error
+      servers:
+        - url: 'http://localhost:8888'
+    servers:
+      - url: 'http://localhost:8888'
+components:
+  securitySchemes:
+    basic:
+      type: http
+      scheme: basic
